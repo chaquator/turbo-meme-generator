@@ -29,6 +29,16 @@ optional arguments:
                         Specify how many memes you intend to output
 ```
 
+## Sample images
+![WHAT ARE THOOOSE](samples/1.jpg)
+![WHAT ARE THOOOSE](samples/2.jpg)
+![WHAT ARE THOOOSE](samples/3.jpg)
+![WHAT ARE THOOOSE](samples/4.jpg)
+![WHAT ARE THOOOSE](samples/5.jpg)
+![WHAT ARE THOOOSE](samples/6.jpg)
+![WHAT ARE THOOOSE](samples/7.jpg)
+![WHAT ARE THOOOSE](samples/8.jpg)
+
 ## Install
 Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)
 
