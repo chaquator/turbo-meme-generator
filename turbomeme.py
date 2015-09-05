@@ -212,6 +212,7 @@ def generateMeme(templatesList, templatesLocation, simagesList, simagesLocation,
 	
 	return templateImageFile
 	
+#Misc functions
 def ensure_dir(f):
 	d = os.path.dirname(f)
 	if not os.path.exists(d):
