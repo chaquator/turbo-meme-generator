@@ -30,7 +30,7 @@ optional arguments:
 ```
 
 ## Install
-Check [releases](to do)
+Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)
 
 ## Build
 Run `setup.py` inside the directory to compile it into a single `.exe` file. 
