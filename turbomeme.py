@@ -244,7 +244,7 @@ def main():
 	argParser.add_argument("output",
 							metavar = "out",
 							type = str,
-							help = "Output file (or directory if you're using count")
+							help = "Output file (or directory if you're using count)")
 						
 	argParser.add_argument("-co", "--count",
 							metavar = "count",
@@ -300,6 +300,7 @@ def main():
 		
 		for i in range(args.count):
 			generateMeme(templatesList, templatesLocation, simagesList, simagesLocation).save(outdir + "image" + str(i) + ".jpg", "jpeg", quality = imageQuality)
+			print("(" + str(i) + "/" + str(args.count) + ")")
 			
 	'''
 	GOALS

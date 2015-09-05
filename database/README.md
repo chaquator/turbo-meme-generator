@@ -8,6 +8,7 @@ Note: If there is a tag nested in another tag (e.g. "text-long" nested inside "t
 - misc
 - text
 	- text-long
+
 You're free to add your own, of course.
 
 ## Templates
@@ -40,5 +41,6 @@ Looks like: `1,2.extension`
 A real-world example: `sponge2,reaction.jpg`
 
 - Can be any extension (`.png`, `.jpg`, whatever [Pillow](https://python-pillow.github.io/) supports)
-1. Literally anything can go in here; it exists to differentiate between images with the same tag
-2. Image tags
+- What the numbers mean
+	1. Literally anything can go in here; it exists to differentiate between images with the same tag
+	2. Image tags
