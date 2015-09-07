@@ -40,6 +40,7 @@ except ImportError:
 defaultConfig = {
 	"templates": "./database/templates",
 	"simages" : "./database/simages",
+	"unused" : "./database/unused.txt",
 	"image-quality" : 50
 }
 
@@ -108,7 +109,7 @@ def filterList(simageList, tags, leniency, blacklist):
 					
 			if append:
 				tempList.append(i)
-				
+	
 	return tempList
 	
 #Image-related functions
@@ -141,24 +142,40 @@ def image_tint(src, tint='#ffffff'):
         luts += tuple(range(256))  # for 1:1 mapping of copied alpha values
 
     return Image.merge(*merge_args).point(luts)
+	
+#Template functions?
+#Returns an unused template from the list and replenishes unused list should it start to run short
+def unusedTemplate(unusedList, templatesList, templatesLocation):
+	#If the unused list is at 10% or lower the length of the normal templates list, replace unusedList and 
+	if len(unusedList) <= round(len(templatesList) * 0.1):
+		temporaryList = templatesList
+	else:
+		temporaryList = unusedList
+		
+	#Get random index, assign variable to list at that index, and delete that entry within the list
+	randomIndex = random.randrange(len(temporaryList))
+	
+	randomElement = temporaryList[randomIndex]
+	
+	temporaryList.pop(randomIndex)
+		
+	return [temporaryList, templatesLocation + "/" + randomElement]
 
+#Meme functions?
 #Generates image with stuff and returns
-def generateMeme(templatesList, templatesLocation, simagesList, simagesLocation, **kwargs):
-	#Get random template
-	templateFilename = random.choice(templatesList)
-	
-	#Get the filename sans the extension
-	templateText = templateFilename.split(".")[0]
-	
+def generateMeme(templateFilename, simagesList, simagesLocation):
 	#Go through simages directory and filter through according to what region(s) specif(y|ies)
 		
 	#Open template image to prepare overlaying simages on it
-	templateImageFile = Image.open(templatesLocation + "/" + templateFilename)
+	templateImageFile = Image.open(templateFilename)
+	
+	#Get template data (i.e. filename sans extension and path)
+	templateText = templateFilename.split("\\")[-1].split("/")[-1].split(".")[0]
 	
 	useNext = ""
 	for entry in templateText.split(";"):
 		if entry != "":
-			#There are 5 sub-entries: tags, tag leniency, tag blacklist, size, and position
+			#There are 5 sub-entries: tags, tag leniency, tag blacklist, ul-corner, and lr-corner
 			subentries = entry.split(",")
 			
 			#Select random image from on a list filtered based on some rules (or uses the same one if that is determined)
@@ -237,20 +254,30 @@ def main():
 							type = str,
 							help = "Location for templates")
 							
+	argParser.add_argument("-uf", "--unused-file",
+							metavar = "dir",
+							type = str,
+							help = "Location for unused files")
+							
 	argParser.add_argument("-q", "--quality",
 							metavar = "int",
 							type = int,
 							help = "Quality of image from 1 (worst) to 95 (best)")
-	
-	argParser.add_argument("output",
-							metavar = "out",
-							type = str,
-							help = "Output file (or directory if you're using count)")
 						
 	argParser.add_argument("-co", "--count",
 							metavar = "count",
 							type = int,
 							help = "Specify how many memes you intend to output")
+							
+	argParser.add_argument("-tf", "--template-file",
+							metavar = "file",
+							type = str,
+							help = "Override choosing random template and supply your own, instead. Used for testing purposes")
+	
+	argParser.add_argument("output",
+							metavar = "out",
+							type = str,
+							help = "Output file (or directory if you're using count)")
 	
 	args = argParser.parse_args()
 	
@@ -280,6 +307,8 @@ def main():
 	
 	simagesLocation = args.simages_location if args.simages_location != None else tryConfigEntry(config, configName, "simages")
 	
+	unusedFile = args.unused_file if args.unused_file != None else tryConfigEntry(config, configName, "unused")
+	
 	imageQuality = args.quality if args.quality != None else int(tryConfigEntry( config, configName, "image-quality"))
 	
 	#Search directory for random template and its accompanying data file
@@ -290,19 +319,49 @@ def main():
 	#Get list of simages
 	for dirpath, dirpaths, filenames in os.walk(simagesLocation):
 		simagesList = filenames
+		
+	#Get unused templates
+	unusedFileHandle = open(unusedFile, "r")
+	unusedList = unusedFileHandle.read().split("\n")
+	unusedFileHandle.close()
 	
+	#Setup template override
+	templateOverride = False
+	if args.template_file != None:
+		templateOverride = True
+	
+	#Outut just one image
 	if args.count == None:
-		#Outut just one image
-		generateMeme(templatesList, templatesLocation, simagesList, simagesLocation).save(args.output, "jpeg", quality = imageQuality)
+		#No need for extra effort or to remove any elements from the list if we're not using them
+		if not templateOverride:
+			unusedFunc = unusedTemplate(unusedList, templatesList, templatesLocation)
+			unusedList = unusedFunc[0]
+		
+		templateFile = args.template_file if templateOverride else unusedFunc[1]
+		
+		generateMeme(templateFile, simagesList, simagesLocation).save(args.output, "jpeg", quality = imageQuality)
+	#Generate multiple images
 	else:
-		#Generate multiple images
-		outdir = args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
+		outdir = ("." if args.output[0] != "." else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
 		ensure_dir(outdir)
 		
 		for i in range(args.count):
-			generateMeme(templatesList, templatesLocation, simagesList, simagesLocation).save(outdir + "image" + str(i) + ".jpg", "jpeg", quality = imageQuality)
-			print("(" + str(i) + "/" + str(args.count) + ")")
+			#No need for extra effort or to remove any elements from the list if we're not using them
+			if not templateOverride:
+				unusedFunc = unusedTemplate(unusedList, templatesList, templatesLocation)
+				unusedList = unusedFunc[0]
+				
+			templateFile = args.template_file if templateOverride else unusedFunc[1]
 			
+			generateMeme(templateFile, simagesList, simagesLocation).save(outdir + "image" + str(i) + ".jpg", "jpeg", quality = imageQuality)
+			print("(" + str(i + 1) + "/" + str(args.count) + ")")
+			
+	#We wouldn't want to truncate the unused file if we weren't going to add to it...
+	if not templateOverride:
+		unusedFileHandle = open(unusedFile, "w+")
+		unusedFileHandle.write("\n".join(unusedList))
+		unusedFileHandle.close()
+	
 	'''
 	GOALS
 		Make it so that it generates as many unique images as it can and then stops when it can no longer
