@@ -41,7 +41,7 @@ defaultConfig = {
 	"templates": "./database/templates",
 	"simages" : "./database/simages",
 	"unused" : "./database/unused.txt",
-	"image-quality" : 50
+	"image-quality" : 75
 }
 
 #Config related functions lole

@@ -7,7 +7,9 @@ Runs on Python 3.4(.2)
 ## Usage
 I'm literally gonna let [argparse](https://docs.python.org/3/library/argparse.html) write this for me because I don't want to waste the effort.
 ```
-usage: turbomeme.py [-h] [-c file] [-sl dir] [-tl dir] [-q int] [-co count] out
+usage: turbomeme.py [-h] [-c file] [-sl dir] [-tl dir] [-uf dir] [-q int]
+                    [-co count] [-tf file]
+                    out
 
 Churns memes at the speed of sound
 
@@ -23,21 +25,26 @@ optional arguments:
                         Location for simages
   -tl dir, --templates-location dir
                         Location for templates
+  -uf dir, --unused-file dir
+                        Location for unused files
   -q int, --quality int
                         Quality of image from 1 (worst) to 95 (best)
   -co count, --count count
                         Specify how many memes you intend to output
+  -tf file, --template-file file
+                        Override choosing random template and supply your own,
+                        instead. Used for testing purposes
 ```
 
 ## Sample images
-![WHAT ARE THOOOSE](samples/1.jpg)
-![WHAT ARE THOOOSE](samples/2.jpg)
-![WHAT ARE THOOOSE](samples/3.jpg)
-![WHAT ARE THOOOSE](samples/4.jpg)
-![WHAT ARE THOOOSE](samples/5.jpg)
-![WHAT ARE THOOOSE](samples/6.jpg)
-![WHAT ARE THOOOSE](samples/7.jpg)
-![WHAT ARE THOOOSE](samples/8.jpg)
+![WHAT ARE THOOOSE](samples/image0.jpg)
+![WHAT ARE THOOOSE](samples/image1.jpg)
+![WHAT ARE THOOOSE](samples/image2.jpg)
+![WHAT ARE THOOOSE](samples/image3.jpg)
+![WHAT ARE THOOOSE](samples/image4.jpg)
+![WHAT ARE THOOOSE](samples/image5.jpg)
+![WHAT ARE THOOOSE](samples/image6.jpg)
+![WHAT ARE THOOOSE](samples/image7.jpg)
 
 ## Install
 Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)

@@ -13,7 +13,7 @@ You're free to add your own, of course.
 
 ## Templates
 ### Filenaming scheme
-Looks like: `1,2,3,4,5,6;1,2,3,4,5,6`
+Looks like: `1,2,3,4,5,6,7;1,2,3,4,5,6,7`
 
 A real-world example: `face,0,none,100 100,100 100;face,0,none,300 100,100 100,red,same;face,0,none,400 100,100 100`
 
@@ -44,3 +44,4 @@ A real-world example: `sponge2,reaction.jpg`
 - What the numbers mean
 	1. Literally anything can go in here; it exists to differentiate between images with the same tag
 	2. Image tags
+		- seperated by spaces
