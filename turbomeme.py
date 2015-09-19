@@ -342,7 +342,7 @@ def main():
 		generateMeme(templateFile, simagesList, simagesLocation).save(args.output, "jpeg", quality = imageQuality)
 	#Generate multiple images
 	else:
-		outdir = ("." if not (args.output[0] == "." or args.output[2] == ":") else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
+		outdir = ("." if not (args.output[0] == "." or args.output[2] != ":") else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
 		ensure_dir(outdir)
 		
 		for i in range(args.count):
