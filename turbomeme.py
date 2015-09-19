@@ -146,11 +146,11 @@ def image_tint(src, tint='#ffffff'):
 #Template functions?
 #Returns an unused template from the list and replenishes unused list should it start to run short
 def unusedTemplate(unusedList, templatesList, templatesLocation):
-	#If the unused list is at 10% or lower the length of the normal templates list, replace unusedList and 
-	if len(unusedList) <= round(len(templatesList) * 0.1):
-		temporaryList = templatesList
+	#If the unused list is at 10% or lower the length of the normal templates list, return the full templates list
+	if len(unusedList) <= (len(templatesList) * 0.1):
+		temporaryList = templatesList[:]
 	else:
-		temporaryList = unusedList
+		temporaryList = unusedList[:]
 		
 	#Get random index, assign variable to list at that index, and delete that entry within the list
 	randomIndex = random.randrange(len(temporaryList))
@@ -342,7 +342,7 @@ def main():
 		generateMeme(templateFile, simagesList, simagesLocation).save(args.output, "jpeg", quality = imageQuality)
 	#Generate multiple images
 	else:
-		outdir = ("." if args.output[0] != "." else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
+		outdir = ("." if not (args.output[0] == "." or args.output[2] == ":") else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
 		ensure_dir(outdir)
 		
 		for i in range(args.count):
@@ -362,10 +362,7 @@ def main():
 		unusedFileHandle.write("\n".join(unusedList))
 		unusedFileHandle.close()
 	
-	'''
-	GOALS
-		Make it so that it generates as many unique images as it can and then stops when it can no longer
-	'''
+	#TODO: make it able to reset the list on long output runs without having to save or something like that
 
 if __name__ == "__main__":
 	main()
