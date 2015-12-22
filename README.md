@@ -4,6 +4,10 @@ A tool I made that uses templates and simages (short for "surrogate images") to 
 
 Runs on Python 3.4(.2)
 
+## Install
+Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)
+The database is available [here](https://github.com/Chaquator/turbo-meme-generator-database).
+
 ## Usage
 I'm literally gonna let [argparse](https://docs.python.org/3/library/argparse.html) write this for me because I don't want to waste the effort.
 ```
@@ -45,9 +49,6 @@ optional arguments:
 ![WHAT ARE THOOOSE](samples/image5.jpg)
 ![WHAT ARE THOOOSE](samples/image6.jpg)
 ![WHAT ARE THOOOSE](samples/image7.jpg)
-
-## Install
-Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)
 
 ## Build
 Run `setup.py` inside the directory to compile it into a single `.exe` file. 
