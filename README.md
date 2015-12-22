@@ -5,7 +5,8 @@ A tool I made that uses templates and simages (short for "surrogate images") to 
 Runs on Python 3.4(.2)
 
 ## Install
-Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases)
+Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases).
+
 The database is available [here](https://github.com/Chaquator/turbo-meme-generator-database).
 
 ## Usage
