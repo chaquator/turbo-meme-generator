@@ -9,6 +9,8 @@ Check [releases](https://github.com/Chaquator/turbo-meme-generator/releases).
 
 The database is available [here](https://github.com/Chaquator/turbo-meme-generator-database).
 
+The template designer is available [here](https://github.com/Chaquator/turbo-meme-generator-template-designer).
+
 ## Usage
 I'm literally gonna let [argparse](https://docs.python.org/3/library/argparse.html) write this for me because I don't want to waste the effort.
 ```
