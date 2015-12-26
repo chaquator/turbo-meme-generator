@@ -92,20 +92,14 @@ def filterList(simageList, tags, leniency, blacklist):
 		for i in simageList:
 			simageTags = i.split(".")[0].split(",")[1].split(" ")
 			
-			append = True
-			
-			for j in tags:
-				if j in blacklist:
-					append = False
-					break
-			
-				if tags[0] == "any":
-					append = True
-					break
-					
-				if j not in simageTags:
-					append = False
-					break
+			if tags[0] == "any":
+				append = True
+			elif not (True in [j not in simageTags for j in tags]):
+				append = True
+			elif not (True in [var in blacklist for var in simageTags]):
+				append = True
+			else:
+				append = False
 					
 			if append:
 				tempList.append(i)
@@ -342,7 +336,7 @@ def main():
 		generateMeme(templateFile, simagesList, simagesLocation).save(args.output, "jpeg", quality = imageQuality)
 	#Generate multiple images
 	else:
-		outdir = ("." if not (args.output[0] == "." or args.output[2] != ":") else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
+		outdir = ("." if not (args.output[0] == "." or args.output[1] != ":") else "") + args.output + ("/" if args.output[len(args.output) - 1] != "/" else "")
 		ensure_dir(outdir)
 		
 		for i in range(args.count):
